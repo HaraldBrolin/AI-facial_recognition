@@ -1,0 +1,9 @@
+Might be a good idea to divide signal by 32
+
+From slides, X = pixel signal
+
+Change order between each trainings, otherwise last images most important
+
+Need to chose activation finction g()
+
+

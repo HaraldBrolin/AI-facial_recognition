@@ -13,8 +13,12 @@ class Perceptron:
     bias = 1 # TODO might want to change bias throughout learning, dunno
 
     def __init__(self):  # Runs for each instance
-        # self.epoch = epoch # Add epoch into __init__
-        self.training_set = self.training_to_dic()  # Stores the training set images as a dict
+        self.epoch = 70 # Add epoch into __init__
+
+        self.temp_variable = self.training_to_dic()
+        self.training_dic = self.temp_variable[0]  # Returns dictionary and list of keys
+        self.training_image_keys = self.temp_variable[1]# Stores the keys belonging to training_set
+
         self.training_ans = self.training_ans_to_dict() # Same for answers
         self.weight_list = [random.uniform(0.01, 0.2) for x in range(400)]  # TODO might want to modify range
 
@@ -47,7 +51,7 @@ class Perceptron:
         d = {}
         for index, key in enumerate(list_of_key):  # Binds each key (image-name) to list of pixel values
             d[key] = list_of_img[index]
-        return d
+        return d, list_of_key
 
     def training_ans_to_dict(self):
         """
@@ -78,7 +82,7 @@ class Perceptron:
         :return: Tanh(X) where x is the activation signal
         """
         activ = Perceptron.bias
-        pixels = self.training_set[image]
+        pixels = self.training_dic[image]
         for index, pixel in enumerate(pixels):
             activ += self.weight_list[index] * pixel
         """ Alternative activation functions, check out Leaky RealU- and Softmax-function"""
@@ -97,7 +101,7 @@ class Perceptron:
         """
         learning_rate = 0.5  # TODO might want to change learning rate
         for index, weight in enumerate(weights):
-            weights[index] = weight + (learning_rate * error * self.training_set[image][index])  # Calculates the
+            weights[index] = weight + (learning_rate * error * self.training_dic[image][index])  # Calculates the
             # weight correction for each weight
         return weights
 
@@ -107,13 +111,19 @@ class Perceptron:
         image in the training_set
         :return: Final trained weight_list
         """
-        print(self.training_set)
-        print(self.weight_list)
-        for image in self.training_set:
-            y_ans = self.training_ans[image]
-            y_signal = self.activation(image)
-            error = y_ans - y_signal
-            self.weight_list= self.change_weights(error, self.weight_list, image)
+
+        # print(self.training_dic)
+        # print(self.weight_list)
+
+        for times in range(self.epoch):
+            random.shuffle(self.training_image_keys)
+            for key in self.training_image_keys:
+                y_ans = self.training_ans[key]
+                y_signal = self.activation(key)
+                error = y_ans - y_signal
+                self.weight_list= self.change_weights(error, self.weight_list, key)
+
+        print(len(self.weight_list))
         return self.weight_list  # The trained weight list
 
 
@@ -121,12 +131,5 @@ class Perceptron:
 p1 = Perceptron()
 p1.training_of_perceptron()
 
-# TODO add randomiz to list of keys ex:
-# keys=d.keys() # List of keys
-# random.shuffle(keys)
-# for key in keys:
-#     print key, d[key]
-
-# TODO a way of doing the training on the set X:times
 
 # TODO create a four way network, possibly need to do four different dicts

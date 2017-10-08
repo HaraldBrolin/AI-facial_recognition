@@ -4,89 +4,116 @@ import math
 
 
 class Perceptron:
+
+    # Sets some instance independent variables
     path_to_training = r"/home/harald/AI-facial_recognition/Assignment_specification/training-A.txt"
     # r"H:\Desktop\AI\AI_2\Test_set\training-A.txt"
     path_to_ans = r"/home/harald/AI-facial_recognition/Assignment_specification/facit-A.txt"
     # r"H:\Desktop\AI\AI_2\Test_set\facit-A.txt"
-    bias = 1
+    bias = 1 # TODO might want to change bias throughout learning, dunno
 
-    def __init__(self):
-        self.training_set = self.training_to_dic()
-        self.training_ans = self.training_ans_to_dict()
-        self.weight_list = [random.uniform(0.01, 0.2) for x in range(400)]
+    def __init__(self):  # Runs for each instance
+        # self.epoch = epoch # Add epoch into __init__
+        self.training_set = self.training_to_dic()  # Stores the training set images as a dict
+        self.training_ans = self.training_ans_to_dict() # Same for answers
+        self.weight_list = [random.uniform(0.01, 0.2) for x in range(400)]  # TODO might want to modify range
 
     def read_file(self, file_path):
+        """
+        Reads the file corresponding to the path given
+        """
         with open(file_path) as file:
             data_set = file.readlines()
             file.close()
         return data_set
 
     def training_to_dic(self):
-        training_set = self.read_file(Perceptron.path_to_training)
+        """
+        :return: A finished dictionary from the image format file, key corresponds to list of pixel values
+        """
+        training_set = self.read_file(Perceptron.path_to_training)  # Load file using read.file()
         list_of_img = []
         list_of_key = []
         for row, line in enumerate(training_set):
             if line.startswith("Image") is True:
-                list_of_key.append(line.rstrip())
+                list_of_key.append(line.rstrip())   # Insert image name into keys
                 img = []
-                for numbers in training_set[row + 1:row + 21]:
+                for numbers in training_set[row + 1:row + 21]:  # For each row of pixels, format and insert into long list
                     numbers = numbers.strip()
-                    # numbers = [int(i)/31 for i in numbers.split()]
                     numbers = [int(i) / 31 for i in
-                               numbers.split()]  # Signal goes from -1 to 1, this is since every function given needs -1 to 1
+                               numbers.split()]  # Divide signal by 31 to get fro, 0 to 1
                     img += numbers
                 list_of_img.append(img)
         d = {}
-        for index, key in enumerate(list_of_key):
+        for index, key in enumerate(list_of_key):  # Binds each key (image-name) to list of pixel values
             d[key] = list_of_img[index]
         return d
 
     def training_ans_to_dict(self):
-        training_ans = self.read_file(Perceptron.path_to_ans)
+        """
+        :return: Finnished dictionary with each image name corresponding to right face (1,2,3,4)
+        """
+        training_ans = self.read_file(Perceptron.path_to_ans)   # Load file using read.file()
         list_of_ans = []
         list_of_key = []
         for line in training_ans:
             if line.startswith("Image") is True:
                 list_of_key.append(line.split()[0])
-                if int(line.split()[1]) == 1 or int(line.split()[1]) == 2:
+                """ 
+                Rows below is for special case, two outcomes instead of four!
+                """
+                if int(line.split()[1]) == 1 or int(line.split()[1]) == 2:  #TODO Here is where i reduce to two cases
                     list_of_ans.append(1)
                 else:
                     list_of_ans.append(0)
-                    # list_of_ans.append(line.split()[1])
         d = {}
-        for index, key in enumerate(list_of_key):
+        for index, key in enumerate(list_of_key):  # Links the key (image-name) to correct answer (1,2,3,4)
             d[key] = list_of_ans[index]
         return d
 
     def activation(self, image):  # Takes a randomly generated list of weights and multiplies by signal for all pixel
+        """
+        Takes the random-generated list of weights and caluculates the activation signal.
+        :param image: The image we want to check
+        :return: Tanh(X) where x is the activation signal
+        """
         activ = Perceptron.bias
         pixels = self.training_set[image]
         for index, pixel in enumerate(pixels):
             activ += self.weight_list[index] * pixel
+        """ Alternative activation functions, check out Leaky RealU- and Softmax-function"""
         # return 1.0 if activ >= 1.0 else 0.0
         # return 1 / (1 + math.pow(math.e, -activ))
         return math.tanh(activ)
 
 
     def change_weights(self, error, weights, image):
-        learning_rate = 0.5
+        """
+        Modifies the weight list for each face-recognizing neuron
+        :param error: The error between signal vien from activation() and the correct answer
+        :param weights: List of weights
+        :param image: The image we want to correct for
+        :return: New corrected list of weights
+        """
+        learning_rate = 0.5  # TODO might want to change learning rate
         for index, weight in enumerate(weights):
-            weights[index] = weight + (learning_rate * error * self.training_set[image][index])
+            weights[index] = weight + (learning_rate * error * self.training_set[image][index])  # Calculates the
+            # weight correction for each weight
         return weights
 
     def training_of_perceptron(self):
+        """
+        Trains the weight-list, or the perceptron. Loop that runs activation() and change_weights() for each
+        image in the training_set
+        :return: Final trained weight_list
+        """
         print(self.training_set)
-        # self.training_ans
-        # self.weight_list
         print(self.weight_list)
         for image in self.training_set:
             y_ans = self.training_ans[image]
             y_signal = self.activation(image)
-            # print(y_ans, y_signal)
             error = y_ans - y_signal
-            # error = self.training_ans[image] - self.activation(image)
             self.weight_list= self.change_weights(error, self.weight_list, image)
-            #print(self.weight_list)
         return self.weight_list  # The trained weight list
 
 
@@ -94,40 +121,12 @@ class Perceptron:
 p1 = Perceptron()
 p1.training_of_perceptron()
 
-# p1_ans = p1.training_ans_to_dict()
-# p1_training = p1.training_to_dic()
+# TODO add randomiz to list of keys ex:
+# keys=d.keys() # List of keys
+# random.shuffle(keys)
+# for key in keys:
+#     print key, d[key]
 
-#
-# for image in p1_training:
-#     print(p1.activation(image))
+# TODO a way of doing the training on the set X:times
 
-
-# p1_activation = p1.activation(p1_training)
-# weights = [0 for x in range(401)]  # Create list of random numbers from 0 to 1
-# answer = training_ans_to_dict(read_file(r"H:\Desktop\AI\AI_2\Test_set\facit-A.txt"))
-# training_set = training_to_dic(read_file(r"H:\Desktop\AI\AI_2\Test_set\training-A.txt"))
-#
-# accuracy = []
-#
-# for index, tuple in enumerate(answer.items()):
-#     correct = tuple[1]
-#     prediction = activation(training_set[tuple[0]], weights)
-#     #print(prediction)
-#     error = correct - prediction
-#     weights = change_weights(error, weights, training_set[tuple[0]])
-#     if prediction >= 0.5:
-#         print(correct - 1)
-#     else:
-#         print(correct)
-#     #print(error)
-#
-#
-
-# activ = activation(training_set["Image1"], weights)
-# error = answer["Image1"] - activ
-#
-# change_weights(error, weights, training_set["Image1"])
-
-
-
-
+# TODO create a four way network, possibly need to do four different dicts

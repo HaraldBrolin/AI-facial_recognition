@@ -17,8 +17,24 @@ class Employee:
 # if __name__ == '__main__':
 #     pass
 
-print(Employee.number_of_employees)
-emp_1 = Employee('Harald', 'Brolin', 200)
-emp_2 = Employee('Hasse', 'Brolin', 200)
-print(Employee.number_of_employees)
-print(emp_2.number_of_employees)
+# print(Employee.number_of_employees)
+# emp_1 = Employee('Harald', 'Brolin', 200)
+# emp_2 = Employee('Hasse', 'Brolin', 200)
+# print(Employee.number_of_employees)
+# print(emp_2.number_of_employees)
+
+# Decorators
+
+def decorator_function(original_function):
+    def wrapper_function():
+        print("Wrapper executed befor {}".format(original_function.__name__))
+        return original_function()
+    return wrapper_function
+
+@decorator_function
+def display():
+    print("display function ran")
+
+display = decorator_function(display)  # Utan @-decorator så måst evi skriva det här
+display()  # Med @ så blir rad 38 == 39
+

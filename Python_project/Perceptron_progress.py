@@ -13,19 +13,24 @@ class Perceptron:
     path_to_test_images = r"/home/harald/AI-facial_recognition/Assignment_specification/test-B.txt"
     path_to_test_ans = r"/home/harald/AI-facial_recognition/Assignment_specification/facit-B.txt"
     bias = 1 # TODO might want to change bias throughout learning, dunno
+    epoch = 70 # TODO might want to modify
+    learning_rate = 0.5  # TODO might want to change learning rate
 
     def __init__(self):  # Runs for each instance
-        self.epoch = 70 # Add epoch into __init__
 
         self.temp_variable = self.training_to_dic(self.path_to_training)
         self.training_dic = self.temp_variable[0]  # Returns dictionary and list of keys
         self.training_image_keys = self.temp_variable[1]# Stores the keys belonging to training_set
 
-        self.training_ans = self.training_ans_to_dict(self.path_to_ans) # Same for answers
+        self.training_ans_faces = self.training_ans_to_dict(self.path_to_ans, 1), \
+                                  self.training_ans_to_dict(self.path_to_ans, 2), \
+                                  self.training_ans_to_dict(self.path_to_ans, 3), \
+                                  self.training_ans_to_dict(self.path_to_ans, 4)
+
         self.weight_list = [random.uniform(0.01, 0.2) for x in range(400)]  # TODO might want to modify range
 
         self.test_images = self.training_to_dic(self.path_to_test_images)[0]
-        self.test_ans = self.training_ans_to_dict(self.path_to_test_ans)
+        self.test_ans = self.training_ans_to_dict(self.path_to_test_ans, 0)
 
 
     def read_file(self, file_path):
@@ -59,7 +64,7 @@ class Perceptron:
             d[key] = list_of_img[index]
         return d, list_of_key
 
-    def training_ans_to_dict(self, path_to_ans):
+    def training_ans_to_dict(self, path_to_ans, number):
         """
         :return: Finnished dictionary with each image name corresponding to right face (1,2,3,4)
         """
@@ -69,19 +74,19 @@ class Perceptron:
         for line in training_ans:
             if line.startswith("Image") is True:
                 list_of_key.append(line.split()[0])
-                """ 
-                Rows below is for special case, two outcomes instead of four!
-                """
-                if int(line.split()[1]) == 1 or int(line.split()[1]) == 2:  #TODO Here is where i reduce to two cases
-                    list_of_ans.append(1)
+                if number == 0:
+                    list_of_ans.append(int(line.split()[1]))
                 else:
-                    list_of_ans.append(0)
+                    if int(line.split()[1]) == int(number):  #TODO Here is where i reduce to two cases
+                        list_of_ans.append(1)
+                    else:
+                        list_of_ans.append(0)
         d = {}
         for index, key in enumerate(list_of_key):  # Links the key (image-name) to correct answer (1,2,3,4)
             d[key] = list_of_ans[index]
         return d
 
-    def activation(self, image, set_of_images):  # Takes a randomly generated list of weights and multiplies by signal for all pixel
+    def activation(self, image, set_of_images, current_weights):  # Takes a randomly generated list of weights and multiplies by signal for all pixel
         """
         Takes the random-generated list of weights and caluculates the activation signal.
         :param image: The image we want to check
@@ -91,11 +96,11 @@ class Perceptron:
         # pixels = self.training_dic[image]
         pixels = set_of_images[image]
         for index, pixel in enumerate(pixels):
-            activ += self.weight_list[index] * pixel
+            activ += current_weights[index] * pixel
         """ Alternative activation functions, check out Leaky RealU- and Softmax-function"""
-        return 1.0 if activ >= 1.0 else 0.0
+        #return 1.0 if activ >= 1.0 else 0.0
         # return 1 / (1 + math.pow(math.e, -activ))
-        #return math.tanh(activ)
+        return math.tanh(activ)
 
 
     def change_weights(self, error, weights, image):
@@ -106,40 +111,43 @@ class Perceptron:
         :param image: The image we want to correct for
         :return: New corrected list of weights
         """
-        learning_rate = 0.5  # TODO might want to change learning rate
-        for index, weight in enumerate(weights):
-            weights[index] = weight + (learning_rate * error * self.training_dic[image][index])  # Calculates the
-            # weight correction for each weight
+        for index, weight in enumerate(weights):  # TODO nästa rad ballar ur, ändrar self.weight_list
+            weights[index] = weight + (0.3 * error * self.training_dic[image][index])  # Calculates the
         return weights
 
-    def training_of_perceptron(self):
+    def training_one_face(self, face):
         """
         Trains the weight-list, or the perceptron. Loop that runs activation() and change_weights() for each
         image in the training_set
         :return: Final trained weight_list
         """
-        # print(self.training_dic)
-        # print(self.weight_list)
-        for times in range(self.epoch):
+        weights_in_training = self.weight_list
+        for times in range(Perceptron.epoch):
             random.shuffle(self.training_image_keys)
             for key in self.training_image_keys:
-                y_ans = self.training_ans[key]
-                y_signal = self.activation(key, self.training_dic)
+                y_ans = face[key]
+                y_signal = self.activation(key, self.training_dic, weights_in_training)
                 error = y_ans - y_signal
-                self.weight_list= self.change_weights(error, self.weight_list, key)
+                weights_in_training = self.change_weights(error, weights_in_training, key)
+        return weights_in_training  # The trained weight list
 
-        print(self.weight_list)
-        return self.weight_list  # The trained weight list
+    def finalize_perceptron(self):
+        weight_matrix = []
+        for face in self.training_ans_faces:
+            print("Training face")
+            weight_matrix.append(self.training_one_face(face))
+        return weight_matrix
 
-    def tester(self):
+
+    def predict(self):
         accuracy = 0
         for key in self.test_ans:
             predicted = float(self.activation(key, self.test_images))
             expected = float(self.test_ans[key])
-            print("Predicted: {}  Expected: {}  Image: {}".format(predicted, expected, key))
+            #print("Predicted: {}  Expected: {}  Image: {}".format(predicted, expected, key))
             if predicted == expected:
                 accuracy += 1
-            #print(self.test_images[key])
+            #print(self.test_im ages[key])
         print(accuracy/100)
         pass
         """
@@ -150,8 +158,16 @@ class Perceptron:
 
 
 
-p1 = Perceptron()
-p1.training_of_perceptron()
-p1.tester()
+"""
+Gör om så att weight_list randomizeras varje gång
+"""
+
+if __name__ == "__main__":
+
+    p1 = Perceptron()
+    # print(p1.training_ans_faces)
+    print(p1.finalize_perceptron())
+    # p1.finalize_perceptron()
+    # p1.predict()
 
 # TODO create a four way network, possibly need to do four different dicts

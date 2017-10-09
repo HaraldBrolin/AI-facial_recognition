@@ -15,23 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Perceptron.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Perceptron.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="154" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="156" selection-end-column="74" />
-              <folding>
-                <element signature="e#15#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Perceptron_progress.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Perceptron_progress.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="156" column="74" lean-forward="false" selection-start-line="156" selection-start-column="74" selection-end-line="156" selection-end-column="74" />
+            <state relative-caret-position="200">
+              <caret line="161" column="49" lean-forward="false" selection-start-line="161" selection-start-column="49" selection-end-line="161" selection-end-column="49" />
               <folding>
                 <element signature="e#15#28#0" expanded="true" />
               </folding>
@@ -55,6 +43,13 @@
       <find>== 1</find>
       <find>self.training_set</find>
       <find>activation</find>
+      <find>weight_list</find>
+      <find>training_of_perc</find>
+      <find>training_ans</find>
+      <find>bias</find>
+      <find>epoch</find>
+      <find>learning</find>
+      <find>self.weight_list</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -106,7 +101,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Python" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -121,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Perceptron">
+  <component name="RunManager" selected="Python.Perceptron_progress">
     <configuration default="false" name="class_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -153,6 +148,39 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Python_project" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Perceptron.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests for Perceptron_progress.Perceptron.tester" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Python_project" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Perceptron_progress.Perceptron.tester&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Perceptron_progress" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Python_project" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Perceptron_progress.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,14 +250,18 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method />
     </configuration>
-    <list size="2">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.class_test" />
       <item index="1" class="java.lang.String" itemvalue="Python.Perceptron" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for Perceptron_progress.Perceptron.tester" />
+      <item index="3" class="java.lang.String" itemvalue="Python.Perceptron_progress" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.Perceptron" />
-        <item index="1" class="java.lang.String" itemvalue="Python.class_test" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.Perceptron_progress" />
+        <item index="1" class="java.lang.String" itemvalue="Python.Perceptron" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for Perceptron_progress.Perceptron.tester" />
+        <item index="3" class="java.lang.String" itemvalue="Python.class_test" />
       </list>
     </recent_temporary>
   </component>
@@ -245,6 +277,23 @@
       <updated>1507233528869</updated>
     </task>
     <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Unittests_for_Perceptron_progress_Perceptron_tester - 2017.10.09 at 12h 34m 50s.xml">
+      <configuration name="Unittests for Perceptron_progress.Perceptron.tester" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Perceptron_progress_Perceptron_tester - 2017.10.09 at 12h 35m 39s.xml">
+      <configuration name="Unittests for Perceptron_progress.Perceptron.tester" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Perceptron_progress_Perceptron_tester - 2017.10.09 at 12h 35m 49s.xml">
+      <configuration name="Unittests for Perceptron_progress.Perceptron.tester" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Perceptron_progress_Perceptron_tester - 2017.10.09 at 12h 36m 53s.xml">
+      <configuration name="Unittests for Perceptron_progress.Perceptron.tester" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_Perceptron_progress_Perceptron_tester - 2017.10.09 at 12h 37m 03s.xml">
+      <configuration name="Unittests for Perceptron_progress.Perceptron.tester" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -268,7 +317,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39817628" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39786586" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -284,14 +333,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Perceptron.py</url>
-          <line>136</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="13" />
+      <option name="time" value="32" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -326,6 +368,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Perceptron.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="14">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="e#15#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///usr/lib/python3/dist-packages/apport_python_hook.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
@@ -334,20 +386,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Perceptron.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="154" column="11" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="156" selection-end-column="74" />
-          <folding>
-            <element signature="e#15#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Perceptron_progress.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="156" column="74" lean-forward="false" selection-start-line="156" selection-start-column="74" selection-end-line="156" selection-end-column="74" />
+        <state relative-caret-position="200">
+          <caret line="161" column="49" lean-forward="false" selection-start-line="161" selection-start-column="49" selection-end-line="161" selection-end-column="49" />
           <folding>
             <element signature="e#15#28#0" expanded="true" />
           </folding>
